@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:36:39 by gfernand          #+#    #+#             */
-/*   Updated: 2023/04/03 20:08:35 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/04/03 21:34:51 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,11 @@ static int	ft_init_struct(t_arg *arg, char **av)
 	arg->time_die = ft_atoi(av[2]);
 	arg->time_eat = ft_atoi(av[3]);
 	arg->time_sleep = ft_atoi(av[4]);
-	if (arg->philo_nb < 1 || arg->time_die < 1
-		|| arg->time_eat < 1 || arg->time_sleep < 1)
+	arg->nb_must_eat = 0;
+	if (av[5])
+		arg->nb_must_eat = ft_atoi(av[5]);
+	if (arg->philo_nb < 1 || arg->time_die < 1|| arg->time_eat < 1
+			|| arg->time_sleep < 1 || arg->nb_must_eat < 1)
 	{
 		free (arg);
 		printf("Invalid arguments");
