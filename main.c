@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:36:39 by gfernand          #+#    #+#             */
-/*   Updated: 2023/04/03 13:59:34 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/04/03 16:46:27 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,17 @@ int	main(int ac, char **av)
 
 static int	ft_init_struct(t_arg *arg, char **av)
 {
-	arg->philosophers = ft_atoi(av[1]);
-	if (arg->philosophers < 0)
+	arg->philo_nb = ft_atoi(av[1]);
+	if (arg->philo_nb < 0)
 		return (-1);
-	arg->die_time = ft_atoi(av[2]);
-	if (arg->die_time < 0)
+	arg->time_die = ft_atoi(av[2]);
+	if (arg->time_die < 0)
 		return (-1);
-	arg->eat_time = ft_atoi(av[3]);
-	if (arg->eat_time < 0)
+	arg->time_eat = ft_atoi(av[3]);
+	if (arg->time_eat < 0)
 		return (-1);
-	arg->sleep_time = ft_atoi(av[4]);
-	if (arg->sleep_time < 0)
+	arg->time_sleep = ft_atoi(av[4]);
+	if (arg->time_sleep < 0)
 		return (-1);
 	return (0);
 }

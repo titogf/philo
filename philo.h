@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:36:54 by gfernand          #+#    #+#             */
-/*   Updated: 2023/04/03 13:27:26 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/04/03 16:46:10 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@
 
 typedef struct s_arg
 {
-	int	philosophers;
-	int	die_time;
-	int	eat_time;
-	int	sleep_time;
+	int	philo_nb;
+	int	time_die;
+	int	time_eat;
+	int	time_sleep;
 }	t_arg;
 
 int	ft_check_argv(char **av);
