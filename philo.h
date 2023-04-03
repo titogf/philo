@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:36:54 by gfernand          #+#    #+#             */
-/*   Updated: 2023/04/03 16:46:10 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/04/03 20:08:01 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_arg
 	int	time_die;
 	int	time_eat;
 	int	time_sleep;
+	int	nb_must_eat;
 }	t_arg;
 
 int	ft_check_argv(char **av);
