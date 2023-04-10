@@ -25,10 +25,15 @@ int	main(int ac, char **av)
 
 //	atexit(leaks);
 	if (ac != 5 && ac != 6)
+	{
+		printf("Invalid arguments\n");
 		return (0);
+	}
 	if (ft_check_argv(av) == -1)
 		return (-1);
 	arg = malloc (sizeof (t_arg));
+	if (!arg)
+		return (-1);
 	if (ft_init_struct(arg, av) == -1)
 		return (-1);
 	free (arg);
@@ -44,11 +49,11 @@ static int	ft_init_struct(t_arg *arg, char **av)
 	arg->nb_must_eat = 0;
 	if (av[5])
 		arg->nb_must_eat = ft_atoi(av[5]);
-	if (arg->philo_nb < 1 || arg->time_die < 1|| arg->time_eat < 1
-			|| arg->time_sleep < 1 || arg->nb_must_eat < 1)
+	if (arg->philo_nb < 1 || arg->time_die < 1 || arg->time_eat < 1
+		|| arg->time_sleep < 1 || arg->nb_must_eat < 0)
 	{
 		free (arg);
-		printf("Invalid arguments");
+		printf("Invalid arguments\n");
 		return (-1);
 	}
 	return (0);
