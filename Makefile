@@ -1,9 +1,9 @@
 
 NAME = philo
 
-SRC = main.c check.c
+SRC = main.c check.c pthreads.c
 
-RED	= '\033[1;31m'
+RED		= '\033[1;31m'
 GREEN	= '\033[1;32m'
 BLUE	= '\033[1;34m'
 WHITE	= '\033[1;37m'
