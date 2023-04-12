@@ -6,11 +6,14 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:36:39 by gfernand          #+#    #+#             */
-/*   Updated: 2023/04/03 21:34:51 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/04/12 15:53:01 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	ft_pthread(t_arg *arg);
+void	*ft_he(void *i);
 
 static int	ft_init_struct(t_arg *arg, char **av);
 
@@ -36,6 +39,7 @@ int	main(int ac, char **av)
 		return (-1);
 	if (ft_init_struct(arg, av) == -1)
 		return (-1);
+	ft_pthread(arg);
 	free (arg);
 	return (0);
 }
@@ -57,4 +61,30 @@ static int	ft_init_struct(t_arg *arg, char **av)
 		return (-1);
 	}
 	return (0);
+}
+
+void	ft_pthread(t_arg *arg)
+{
+	pthread_t	*philo;
+	int			i;
+	int			*i_copy;
+
+	philo = malloc (sizeof (int) * arg->philo_nb);
+	if (!philo)
+		return ;
+	i = -1;
+	while (++i <= arg->philo_nb)
+	{
+		i_copy = malloc (sizeof (int));
+		*i_copy = i;
+		pthread_create(&philo[i], NULL, ft_he, i_copy);
+	}
+	printf("Filosofos %d\n", arg->philo_nb);
+}
+
+void	*ft_he(void *i)
+{
+	int i_new = *((int*) i);
+	printf("Creado el hilo %d\n", i_new);
+	return (i);
 }
