@@ -32,7 +32,7 @@ void	ft_create_thread(t_data *data)
 		thread_data->philo_nb = i + 1;
 		pthread_create(&philo[i], NULL, ft_pthread, thread_data);
 	}
-	printf("Filosofos %d\n", data->philo_nb);
+	free (philo);
 }
 
 static void	*ft_pthread(void *data)
