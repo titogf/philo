@@ -19,16 +19,15 @@ void	ft_create_thread(t_data *data)
 {
 	pthread_t	*philo;
 	t_data		*thread_data;
-	pthread_mutex_t	*fork;
 	int			i;
 
 	philo = malloc (sizeof (int) * data->philo_nb);
 	if (!philo)
 		return ;
-	fork = NULL;
+	data->fork = NULL;
 	i = -1;
 	while (++i < data->philo_nb)
-		pthread_mutex_init(&fork[i], NULL);
+		pthread_mutex_init(&data->fork[i], NULL);
 	i = -1;
 	while (++i < data->philo_nb)
 	{
