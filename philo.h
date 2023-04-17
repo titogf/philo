@@ -18,14 +18,15 @@
 # include <stdlib.h>
 # include <string.h>
 # include <pthread.h>
+# include <sys/time.h>
 
 typedef struct s_data
 {
-	int	philo_nb;
-	int	time_die;
-	int	time_eat;
-	int	time_sleep;
-	int	nb_must_eat;
+	int		philo_nb;
+	int		time_die;
+	int		time_eat;
+	int		time_sleep;
+	int		nb_must_eat;
 }	t_data;
 
 int		ft_check_argv(char **av);
