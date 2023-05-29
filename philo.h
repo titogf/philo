@@ -22,6 +22,7 @@
 
 typedef struct s_data
 {
+	long		start_time;
 	int		philo_nb;
 	int		time_die;
 	int		time_eat;
@@ -34,5 +35,7 @@ int		ft_check_argv(char **av);
 int		ft_atoi(char *str);
 
 void	ft_create_thread(t_data *data);
+
+void	ft_print(t_data *ph, int nb, char *str);
 
 #endif

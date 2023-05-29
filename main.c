@@ -12,10 +12,7 @@
 
 #include "philo.h"
 
-void	ft_pthread(t_data *data);
-void	*ft_he(void *data);
-
-static int	ft_init_struct(t_data *data, char **av);
+static int	ft_init_struct(t_data *data, char **av, long start_time);
 
 /*static void	leaks(void)
 {
@@ -25,7 +22,9 @@ static int	ft_init_struct(t_data *data, char **av);
 int	main(int ac, char **av)
 {
 	t_data	*data;
+	struct timeval start_time;
 
+	gettimeofday(&start_time, NULL);
 //	atexit(leaks);
 	if (ac != 5 && ac != 6)
 	{
@@ -37,15 +36,16 @@ int	main(int ac, char **av)
 	data = malloc (sizeof (t_data));
 	if (!data)
 		return (-1);
-	if (ft_init_struct(data, av) == -1)
+	if (ft_init_struct(data, av, start_time.tv_sec) == -1)
 		return (-1);
 	ft_create_thread(data);
 	free (data);
 	return (0);
 }
 
-static int	ft_init_struct(t_data *data, char **av)
+static int	ft_init_struct(t_data *data, char **av, long start_time)
 {
+	data->start_time = start_time;
 	data->philo_nb = ft_atoi(av[1]);
 	data->time_die = ft_atoi(av[2]);
 	data->time_eat = ft_atoi(av[3]);
@@ -61,4 +61,15 @@ static int	ft_init_struct(t_data *data, char **av)
 		return (-1);
 	}
 	return (0);
+}
+
+void	ft_print(t_data *ph, int nb, char *str)
+{
+	struct timeval tv;
+	long microseconds;
+
+	gettimeofday(&tv, NULL);
+	microseconds = (tv.tv_sec - ph->start_time) * 1000;
+	printf("%ld Philo %i %s\n", microseconds, nb, str);
+	sleep(4);
 }
