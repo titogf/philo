@@ -25,7 +25,7 @@ int	main(int ac, char **av)
 	struct timeval start_time;
 
 	gettimeofday(&start_time, NULL);
-//	atexit(leaks);
+	//atexit(leaks);
 	if (ac != 5 && ac != 6)
 	{
 		printf("Invalid datauments\n");
@@ -71,5 +71,6 @@ void	ft_print(t_data *ph, int nb, char *str)
 	gettimeofday(&tv, NULL);
 	microseconds = (tv.tv_sec - ph->start_time) * 1000;
 	printf("%ld Philo %i %s\n", microseconds, nb, str);
-	sleep(4);
+	sleep(3);
+	usleep(280);
 }

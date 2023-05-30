@@ -13,8 +13,7 @@
 #include "philo.h"
 
 static void	*ft_pthread(void *data);
-void		*ft_memcpy(void *dst, const void *src, size_t n);
-//static void	ft_lock(t_data *ph);
+static void	*ft_memcpy(void *dst, const void *src, size_t n);
 
 void	ft_create_thread(t_data *data)
 {
@@ -45,8 +44,9 @@ void	ft_create_thread(t_data *data)
 	i = -1;
 	while (++i < data->philo_nb)
 		pthread_mutex_destroy(&data->fork[i]);
-	free (data->fork);
 	free (philo);
+	free (data->fork);
+	free(thread_data);
 }
 
 static void	*ft_pthread(void *data)
@@ -59,39 +59,19 @@ static void	*ft_pthread(void *data)
 	i = ph->philo_nb;
 	if (pthread_mutex_trylock(&ph->fork[i - 1]) == 0)
 	{
-		//printf("Philo %d has taken a fork\n", i);
 		ft_print(ph, i, "has taken a fork");
 		if (pthread_mutex_trylock(&ph->fork[i]) == 0)
 		{
-			//printf("Philo %d has taken a fork\n", i);
 			ft_print(ph, i, "has taken a fork");
 			ft_print(ph, i, "is eating");
 		}
 		else
 			pthread_mutex_unlock(&ph->fork[i - 1]);
 	}
-	/*pthread_mutex_lock(&ph->fork[i - 1]);
-	printf("Philo %d has taken a fork\n", i);
-	pthread_mutex_lock(&ph->fork[i]);
-	printf("Philo %d has taken a fork\n", i);
-	//ft_lock(ph);
-	pthread_mutex_unlock(&ph->fork[i - 1]);
-	pthread_mutex_unlock(&ph->fork[i]);*/
 	return (data);
 }
 
-/*static void	ft_lock(t_data *ph)
-{
-	int	i;
-
-	i = ph->philo_nb;
-	pthread_mutex_lock(&ph->fork[i - 1]);
-	printf("Philo %d has taken a fork\n", i);
-	pthread_mutex_lock(&ph->fork[i]);
-	printf("Philo %d has taken a fork\n", i);
-}*/
-
-void	*ft_memcpy(void *dst, const void *src, size_t n)
+static void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
 	size_t	i;
 
