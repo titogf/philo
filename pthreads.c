@@ -46,7 +46,9 @@ void	ft_create_thread(t_data *data)
 		pthread_mutex_destroy(&data->fork[i]);
 	free (philo);
 	free (data->fork);
-	free(thread_data);
+	/*i = -1;
+	while (++i < data->philo_nb)
+		free(thread_data);*/
 }
 
 static void	*ft_pthread(void *data)

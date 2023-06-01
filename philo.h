@@ -22,7 +22,7 @@
 
 typedef struct s_data
 {
-	long		start_time;
+	long		s_time;
 	int		philo_nb;
 	int		time_die;
 	int		time_eat;
