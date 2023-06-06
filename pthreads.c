@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:30:39 by gfernand          #+#    #+#             */
-/*   Updated: 2023/06/06 14:05:54 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/06/06 16:20:38 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	*ft_memcpy(void *dst, const void *src, size_t n);
 void	ft_create_thread(t_data *data)
 {
 	pthread_t	*philo;
-	t_data		*thread_data;
+	t_data		**thread_data;
 	int			i;
 
 	philo = malloc (sizeof (pthread_t) * data->philo_nb);
@@ -31,12 +31,13 @@ void	ft_create_thread(t_data *data)
 	while (++i < data->philo_nb)
 		pthread_mutex_init(&data->fork[i], NULL);
 	i = -1;
+	thread_data = malloc (sizeof(t_data *) * data->philo_nb);
 	while (++i < data->philo_nb)
 	{
-		thread_data = malloc (sizeof (t_data));
-		ft_memcpy(thread_data, data, sizeof(t_data));
-		thread_data->philo_nb = i + 1;
-		pthread_create(&philo[i], NULL, ft_pthread, thread_data);
+		thread_data[i] = malloc (sizeof (t_data));
+		ft_memcpy(thread_data[i], data, sizeof(t_data));
+		thread_data[i]->philo_nb = i + 1;
+		pthread_create(&philo[i], NULL, ft_pthread, thread_data[i]);
 	}
 	i = -1;
 	while (++i < data->philo_nb)
@@ -46,9 +47,10 @@ void	ft_create_thread(t_data *data)
 		pthread_mutex_destroy(&data->fork[i]);
 	free (philo);
 	free (data->fork);
-	/*i = -1;
+	i = -1;
 	while (++i < data->philo_nb)
-		free(thread_data);*/
+		free(thread_data[i]);
+	free(thread_data);
 }
 
 static void	*ft_pthread(void *data)

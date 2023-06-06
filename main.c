@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:36:39 by gfernand          #+#    #+#             */
-/*   Updated: 2023/06/06 14:05:25 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/06/06 15:46:40 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int ac, char **av)
 {
 	t_data	*data;
 
-	//atexit(leaks);
+//	atexit(leaks);
 	if (ac != 5 && ac != 6)
 	{
 		printf("Invalid datauments\n");
