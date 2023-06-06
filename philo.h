@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:36:54 by gfernand          #+#    #+#             */
-/*   Updated: 2023/04/12 16:58:38 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/06/06 14:03:41 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@
 
 typedef struct s_data
 {
-	long		s_time;
-	int		philo_nb;
-	int		time_die;
-	int		time_eat;
-	int		time_sleep;
-	int		nb_must_eat;
+	long			s_time;
+	int				philo_nb;
+	int				time_die;
+	int				time_eat;
+	int				time_sleep;
+	int				nb_must_eat;
 	pthread_mutex_t	*fork;
 }	t_data;
 

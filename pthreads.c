@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:30:39 by gfernand          #+#    #+#             */
-/*   Updated: 2023/04/12 17:20:18 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/06/06 14:05:54 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	ft_create_thread(t_data *data)
 static void	*ft_pthread(void *data)
 {
 	t_data	*ph;
-	int	i;
+	int		i;
 
 	ph = (t_data *) data;
 	printf("Creado el hilo %d\n", ph->philo_nb);

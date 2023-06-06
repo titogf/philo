@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:36:39 by gfernand          #+#    #+#             */
-/*   Updated: 2023/04/12 17:20:16 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/06/06 14:05:25 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	main(int ac, char **av)
 
 static int	ft_init_struct(t_data *data, char **av)
 {
-	struct timeval s_time;
+	struct timeval	s_time;
 
 	gettimeofday(&s_time, NULL);
 	data->s_time = (s_time.tv_sec * 1000) + (s_time.tv_usec / 1000);
@@ -66,8 +66,8 @@ static int	ft_init_struct(t_data *data, char **av)
 
 void	ft_print(t_data *ph, int nb, char *str)
 {
-	struct timeval tv;
-	long int	miliseconds;
+	struct timeval	tv;
+	long int		miliseconds;
 
 	gettimeofday(&tv, NULL);
 	miliseconds = (tv.tv_sec * 1000) + (tv.tv_usec / 1000) - ph->s_time ;
