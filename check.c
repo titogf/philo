@@ -14,11 +14,16 @@
 
 static int	ft_max_int(char *str, int i, int nb);
 
-int	ft_check_argv(char **av)
+int	ft_check_argv(int ac, char **av)
 {
 	int	i;
 	int	j;
 
+	if (ac != 5 && ac != 6)
+	{
+		printf("Invalid arguments\n");
+		return (-1);
+	}
 	i = 0;
 	while (av[++i])
 	{

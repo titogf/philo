@@ -24,12 +24,7 @@ int	main(int ac, char **av)
 	t_data	*data;
 
 //	atexit(leaks);
-	if (ac != 5 && ac != 6)
-	{
-		printf("Invalid datauments\n");
-		return (0);
-	}
-	if (ft_check_argv(av) == -1)
+	if (ft_check_argv(ac, av) == -1)
 		return (-1);
 	data = malloc (sizeof (t_data));
 	if (!data)

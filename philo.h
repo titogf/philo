@@ -31,7 +31,7 @@ typedef struct s_data
 	pthread_mutex_t	*fork;
 }	t_data;
 
-int		ft_check_argv(char **av);
+int		ft_check_argv(int ac, char **av);
 int		ft_atoi(char *str);
 
 void	ft_create_thread(t_data *data);
