@@ -29,6 +29,7 @@ typedef struct s_data
 	int				time_sleep;
 	int				nb_must_eat;
 	pthread_mutex_t	*fork;
+	pthread_mutex_t	write_mutex;
 }	t_data;
 
 int		ft_check_argv(int ac, char **av);

@@ -61,17 +61,19 @@ static void	*ft_pthread(void *data)
 	ph = (t_data *) data;
 	printf("Creado el hilo %d\n", ph->philo_nb);
 	i = ph->philo_nb;
-	if (pthread_mutex_trylock(&ph->fork[i - 1]) == 0)
-	{
-		ft_print(ph, i, "has taken a fork");
-		if (pthread_mutex_trylock(&ph->fork[i]) == 0)
-		{
-			ft_print(ph, i, "has taken a fork");
-			ft_print(ph, i, "is eating");
-		}
-		else
-			pthread_mutex_unlock(&ph->fork[i - 1]);
-	}
+	pthread_mutex_lock(&ph->fork[i - 1]);
+	pthread_mutex_lock(ph->write_mutex);
+	ft_print(ph, i, "has taken a fork");
+	pthread_mutex_unlock(ph->write_mutex);
+	pthread_mutex_lock(&ph->fork[i];
+	pthread_mutex_lock(ph->write_mutex);
+	ft_print(ph, i, "has taken a fork");
+	pthread_mutex_unlock(ph->write_mutex);
+	pthread_mutex_lock(write_mutex);
+	ft_print(ph, i, "is eating");
+	pthread_mutex_unlock(ph->write_mutex);
+	pthread_mutex_unlock(&ph->fork[i - 1]);
+	pthread_mutex_unlock(&ph->fork[i]);
 	return (data);
 }
 
