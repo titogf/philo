@@ -33,23 +33,8 @@ int	ft_create_thread(t_d *d)
 static void	*ft_pthread(void *data)
 {
 	t_philo	*ph;
-	//int		i;
 
 	ph = (t_philo *) data;
-	printf("Creado el hilo %d\n", ph->pa->total_ph);
-	/*i = ph->philo_nb;
-	pthread_mutex_lock(&ph->fork[i - 1]);
-	pthread_mutex_lock(ph->write_mutex);
-	ft_print(ph, i, "has taken a fork");
-	pthread_mutex_unlock(ph->write_mutex);
-	pthread_mutex_lock(&ph->fork[i];
-	pthread_mutex_lock(ph->write_mutex);
-	ft_print(ph, i, "has taken a fork");
-	pthread_mutex_unlock(ph->write_mutex);
-	pthread_mutex_lock(write_mutex);
-	ft_print(ph, i, "is eating");
-	pthread_mutex_unlock(ph->write_mutex);
-	pthread_mutex_unlock(&ph->fork[i - 1]);
-	pthread_mutex_unlock(&ph->fork[i]);*/
+	printf("Creado el hilo %d\n", ph->id);
 	return (ph);
 }
