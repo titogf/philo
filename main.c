@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-static int	ft_init_struct(t_data *data, char **av);
+static void	ft_init_struct(t_d *d, char **av);
 
 /*static void	leaks(void)
 {
@@ -21,52 +21,58 @@ static int	ft_init_struct(t_data *data, char **av);
 
 int	main(int ac, char **av)
 {
-	t_data	*data;
+	t_d	d;
 
 //	atexit(leaks);
 	if (ft_check_argv(ac, av) == -1)
 		return (-1);
-	data = malloc (sizeof (t_data));
-	if (!data)
-		return (-1);
-	if (ft_init_struct(data, av) == -1)
-		return (-1);
-	ft_create_thread(data);
-	free (data);
+	ft_init_struct(&d, av);
+	d.ph = malloc(sizeof (t_philo) * d.arg.total_ph);
+	if (!d.ph)
+		ft_put_finish("Malloc error\n");
+	if (!ft_create_thread(&d))
+		ft_put_finish("Pthread error\n");
+	sleep(3);
+	free(d.ph);
 	return (0);
 }
 
-static int	ft_init_struct(t_data *data, char **av)
+static void	ft_init_struct(t_d *d, char **av)
 {
 	struct timeval	s_time;
 
 	gettimeofday(&s_time, NULL);
-	data->s_time = (s_time.tv_sec * 1000) + (s_time.tv_usec / 1000);
-	data->philo_nb = ft_atoi(av[1]);
-	data->time_die = ft_atoi(av[2]);
-	data->time_eat = ft_atoi(av[3]);
-	data->time_sleep = ft_atoi(av[4]);
-	data->nb_must_eat = 0;
+	d->arg.s_time = (s_time.tv_sec * 1000) + (s_time.tv_usec / 1000);
+	d->arg.total_ph = ft_atoi(av[1]);
+	d->arg.die = ft_atoi(av[2]);
+	d->arg.eat = ft_atoi(av[3]);
+	d->arg.sleep = ft_atoi(av[4]);
+	d->arg.m_eat = 0;
 	if (av[5])
-		data->nb_must_eat = ft_atoi(av[5]);
-	if (data->philo_nb < 1 || data->time_die < 1 || data->time_eat < 1
-		|| data->time_sleep < 1 || data->nb_must_eat < 0)
-	{
-		free (data);
-		printf("Invalid arguments\n");
-		return (-1);
-	}
-	return (0);
+		d->arg.m_eat = ft_atoi(av[5]);
+	if (d->arg.total_ph < 1 || d->arg.die < 1 || d->arg.eat < 1
+		|| d->arg.sleep < 1 || d->arg.m_eat < 0)
+		ft_put_finish("Invalid arguments\n");
 }
 
-void	ft_print(t_data *ph, int nb, char *str)
+void	ft_print(int start_time, int nb, char *str)
 {
 	struct timeval	tv;
 	long int		miliseconds;
 
 	gettimeofday(&tv, NULL);
-	miliseconds = (tv.tv_sec * 1000) + (tv.tv_usec / 1000) - ph->s_time ;
+	miliseconds = (tv.tv_sec * 1000) + (tv.tv_usec / 1000) - start_time ;
 	printf("%ld Philo %i %s\n", miliseconds, nb, str);
 	sleep(3);
 	usleep(28340);
+}
+
+void	ft_put_finish(char *c)
+{
+	int	i;
+
+	i = -1;
+	while (c[++i])
+		write(1, &c[i], 1);
+	exit (1);
 }

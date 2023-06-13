@@ -20,23 +20,37 @@
 # include <pthread.h>
 # include <sys/time.h>
 
-typedef struct s_data
+typedef struct s_arg
 {
 	long			s_time;
-	int				philo_nb;
-	int				time_die;
-	int				time_eat;
-	int				time_sleep;
-	int				nb_must_eat;
-	pthread_mutex_t	*fork;
+	int				total_ph;
+	int				die;
+	int				eat;
+	int				sleep;
+	int				m_eat;
 	pthread_mutex_t	write_mutex;
-}	t_data;
+}	t_arg;
 
+typedef struct	s_philo
+{
+	pthread_t		th_id;
+	pthread_mutex_t	*r_f;
+	pthread_mutex_t	l_f;
+	t_arg			*pa;
+}	t_philo;
+
+typedef struct	s_d
+{
+	t_philo	*ph;
+	t_arg	arg;
+}	t_d;
+
+void	ft_put_finish(char *c);
 int		ft_check_argv(int ac, char **av);
 int		ft_atoi(char *str);
 
-void	ft_create_thread(t_data *data);
+int		ft_create_thread(t_d *d);
 
-void	ft_print(t_data *ph, int nb, char *str);
+void	ft_print(int start_time, int nb, char *str);
 
 #endif
