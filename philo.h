@@ -54,6 +54,6 @@ int		ft_atoi(char *str);
 
 int		ft_create_thread(t_d *d);
 
-void	ft_print(int start_time, int nb, char *str);
+void	ft_print_stats(int start_time, int nb, char *str);
 
 #endif

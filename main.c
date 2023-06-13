@@ -31,6 +31,7 @@ int	main(int ac, char **av)
 	d.ph = malloc(sizeof (t_philo) * d.arg.total_ph);
 	if (!d.ph)
 		ft_put_finish("Malloc error\n");
+	ft_init_struct_philo(&d);
 	if (!ft_create_thread(&d))
 		ft_put_finish("Pthread error\n");
 	sleep(3);
@@ -54,7 +55,6 @@ static void	ft_init_struct_arg(t_d *d, char **av)
 	if (d->arg.total_ph < 1 || d->arg.die < 1 || d->arg.eat < 1
 		|| d->arg.sleep < 1 || d->arg.m_eat < 0)
 		ft_put_finish("Invalid arguments\n");
-	ft_init_struct_philo(d);
 }
 
 static void	ft_init_struct_philo(t_d *d)
@@ -66,7 +66,6 @@ static void	ft_init_struct_philo(t_d *d)
 	while (++i < d->arg.total_ph)
 	{
 		d->ph[i].id = i + 1;
-		printf("Esto es el filosofo %d\n", d->ph[i].id);
 		d->ph[i].nb_eat = 0;
 		d->ph[i].ms_eat = d->arg.s_time;
 		d->ph[i].r_f = NULL;
@@ -80,7 +79,7 @@ static void	ft_init_struct_philo(t_d *d)
 	}
 }
 
-void	ft_print(int start_time, int nb, char *str)
+void	ft_print_stats(int start_time, int nb, char *str)
 {
 	struct timeval	tv;
 	long int		miliseconds;
