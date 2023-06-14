@@ -4,15 +4,23 @@ static int	ft_max_int(char *str, int i, int nb);
 
 void	ft_print_stats(long start_time, int nb, char *str)
 {
-	struct timeval	tv;
 	long int		miliseconds;
 
-	gettimeofday(&tv, NULL);
-	miliseconds = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
-	miliseconds -= start_time;
+	miliseconds = ft_actual_time() - start_time;
 	printf("%ld Philo %i %s\n", miliseconds, nb, str);
 	sleep(3);
 	usleep(28340);
+}
+
+long	ft_actual_time(void)
+{
+	long			time;
+	struct timeval		tv;
+
+	time = 0;
+	gettimeofday(&tv, NULL);
+	time = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
+	return (time);
 }
 
 void	ft_put_finish(char *c)

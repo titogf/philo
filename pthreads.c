@@ -14,7 +14,6 @@
 
 static void	*ft_pthread(void *data);
 static void	ft_usleep(long int time_in_ms);
-long int	actual_time(void);
 
 int	ft_create_thread(t_d *d)
 {
@@ -39,7 +38,7 @@ static void	*ft_pthread(void *data)
 	ph = (t_philo *) data;
 	printf("Creado el hilo %d\n", ph->id);
 	if (ph->id % 2 == 0)
-		usleep(ph->pa->eat / 10);
+		ft_usleep(ph->pa->eat / 10);
 	ft_print_stats(ph->pa->s_time, ph->id, "prueba");
 	return (ph);
 }
@@ -49,18 +48,7 @@ static void	ft_usleep(long int time)
 	long int	start_time;
 
 	start_time = 0;
-	start_time = actual_time();
-	while ((actual_time() - start_time) < time)
+	start_time = ft_actual_time();
+	while ((ft_actual_time() - start_time) < time)
 		usleep(time / 10);
-}
-
-long int	actual_time(void)
-{
-	long int			time;
-	struct timeval		tv;
-
-	time = 0;
-	gettimeofday(&current_time, NULL);
-	time = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
-	return (time);
 }

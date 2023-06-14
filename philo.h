@@ -54,5 +54,6 @@ int		ft_atoi(char *str);
 
 int		ft_create_thread(t_d *d);
 
+long	ft_actual_time(void);
 
 #endif
