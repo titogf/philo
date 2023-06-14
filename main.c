@@ -12,6 +12,7 @@
 
 #include "philo.h"
 
+static int	ft_check_argv(int ac, char **av);
 static void	ft_init_struct_arg(t_d *d, char **av);
 static void	ft_init_struct_philo(t_d *d);
 
@@ -36,6 +37,32 @@ int	main(int ac, char **av)
 		ft_put_finish("Pthread error\n");
 	sleep(3);
 	free(d.ph);
+	return (0);
+}
+
+static int	ft_check_argv(int ac, char **av)
+{
+	int	i;
+	int	j;
+
+	if (ac != 5 && ac != 6)
+	{
+		printf("Invalid arguments\n");
+		return (-1);
+	}
+	i = 0;
+	while (av[++i])
+	{
+		j = -1;
+		while (av[i][++j])
+		{
+			if (av[i][j] < '0' || av[i][j] > '9')
+			{
+				printf("Invalid arguments\n");
+				return (-1);
+			}
+		}
+	}
 	return (0);
 }
 
@@ -77,26 +104,4 @@ static void	ft_init_struct_philo(t_d *d)
 		else
 			d->ph[i].r_f = &d->ph[i + 1].l_f;
 	}
-}
-
-void	ft_print_stats(int start_time, int nb, char *str)
-{
-	struct timeval	tv;
-	long int		miliseconds;
-
-	gettimeofday(&tv, NULL);
-	miliseconds = (tv.tv_sec * 1000) + (tv.tv_usec / 1000) - start_time ;
-	printf("%ld Philo %i %s\n", miliseconds, nb, str);
-	sleep(3);
-	usleep(28340);
-}
-
-void	ft_put_finish(char *c)
-{
-	int	i;
-
-	i = -1;
-	while (c[++i])
-		write(1, &c[i], 1);
-	exit (1);
 }

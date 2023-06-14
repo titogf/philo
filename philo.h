@@ -30,7 +30,7 @@ typedef struct s_arg
 	int				m_eat;
 }	t_arg;
 
-typedef struct	s_philo
+typedef struct s_philo
 {
 	int				id;
 	int				nb_eat;
@@ -42,18 +42,17 @@ typedef struct	s_philo
 	t_arg			*pa;
 }	t_philo;
 
-typedef struct	s_d
+typedef struct s_d
 {
 	t_philo	*ph;
 	t_arg	arg;
 }	t_d;
 
+void	ft_print_stats(long start_time, int nb, char *str);
 void	ft_put_finish(char *c);
-int		ft_check_argv(int ac, char **av);
 int		ft_atoi(char *str);
 
 int		ft_create_thread(t_d *d);
 
-void	ft_print_stats(int start_time, int nb, char *str);
 
 #endif
