@@ -17,7 +17,6 @@ long	ft_actual_time(void)
 	long			time;
 	struct timeval		tv;
 
-	time = 0;
 	gettimeofday(&tv, NULL);
 	time = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
 	return (time);

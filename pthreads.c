@@ -47,7 +47,6 @@ static void	ft_usleep(long int time)
 {
 	long int	start_time;
 
-	start_time = 0;
 	start_time = ft_actual_time();
 	while ((ft_actual_time() - start_time) < time)
 		usleep(time / 10);
