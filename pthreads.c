@@ -14,6 +14,7 @@
 
 static void	*ft_pthread(void *data);
 static void	ft_usleep(long int time_in_ms);
+static void	ft_processes(t_philo *ph);
 
 int	ft_create_thread(t_d *d)
 {
@@ -23,7 +24,7 @@ int	ft_create_thread(t_d *d)
 	i = -1;
 	while (++i < d->arg.total_ph)
 	{
-		d->ph[i].pa = &d->arg;
+		d->ph[i].a = &d->arg;
 		t = pthread_create(&d->ph[i].th_id, NULL, ft_pthread, &d->ph[i]);
 		if (t != 0)
 			return (0);
@@ -38,10 +39,19 @@ static void	*ft_pthread(void *data)
 	ph = (t_philo *) data;
 	printf("Creado el hilo %d\n", ph->id);
 	if (ph->id % 2 == 0)
-		ft_usleep(ph->pa->eat / 10);
-	ft_print_stats(ph->pa->s_time, ph->id, "prueba");
+		ft_usleep(ph->a->eat / 10);
+	ft_print_stats(ph, "prueba");
+	while (!ph->a->death)
+	{
+		ft_processes(ph);
+		printf("DEATH %d\n", ph->a->death);
+	}
 	return (ph);
 }
+
+/*static void	ft_check_death(t_philo *ph)
+{
+}*/
 
 static void	ft_usleep(long int time)
 {
@@ -50,4 +60,27 @@ static void	ft_usleep(long int time)
 	start_time = ft_actual_time();
 	while ((ft_actual_time() - start_time) < time)
 		usleep(time / 10);
+}
+
+static void	ft_processes(t_philo *ph)
+{
+	if (ph->a->death)
+		return ;
+	pthread_mutex_lock(&ph->l_f);
+	pthread_mutex_lock(&ph->a->write_stats);
+	ft_print_stats(ph, "has taken a fork");
+	pthread_mutex_unlock(&ph->a->write_stats);
+	while (!ph->r_f)
+		ft_usleep(ph->a->eat);
+	pthread_mutex_lock(ph->r_f);
+	pthread_mutex_lock(&ph->a->write_stats);
+	ft_print_stats(ph, "has taken a fork");
+	pthread_mutex_unlock(&ph->a->write_stats);
+	pthread_mutex_lock(&ph->a->write_stats);
+	ft_print_stats(ph, "is eating");
+	pthread_mutex_unlock(&ph->a->write_stats);
+	ft_usleep(ph->a->eat);
+	pthread_mutex_unlock(&ph->l_f);
+	pthread_mutex_unlock(ph->r_f);
+	ph->ms_eat = ft_actual_time();
 }

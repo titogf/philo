@@ -28,6 +28,9 @@ typedef struct s_arg
 	int				eat;
 	int				sleep;
 	int				m_eat;
+	int				death;
+	pthread_mutex_t	write_stats;
+	pthread_mutex_t	mutex_death;
 }	t_arg;
 
 typedef struct s_philo
@@ -36,11 +39,9 @@ typedef struct s_philo
 	int				nb_eat;
 	long			ms_eat;
 	pthread_t		th_id;
-	pthread_mutex_t	write_mutex;
-	pthread_mutex_t	dead;
 	pthread_mutex_t	*r_f;
 	pthread_mutex_t	l_f;
-	t_arg			*pa;
+	t_arg			*a;
 }	t_philo;
 
 typedef struct s_d
@@ -49,7 +50,7 @@ typedef struct s_d
 	t_arg	arg;
 }	t_d;
 
-void	ft_print_stats(long start_time, int nb, char *str);
+void	ft_print_stats(t_philo *ph, char *str);
 void	ft_put_finish(char *c);
 int		ft_atoi(char *str);
 

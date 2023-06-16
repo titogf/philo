@@ -88,8 +88,9 @@ static void	ft_init_struct_philo(t_d *d)
 {
 	int	i;
 
-	pthread_mutex_init(&d->ph->write_mutex, NULL);
-	pthread_mutex_init(&d->ph->dead, NULL);
+	pthread_mutex_init(&d->arg.write_stats, NULL);
+	pthread_mutex_init(&d->arg.mutex_death, NULL);
+	d->arg.death = 0;
 	i = -1;
 	while (++i < d->arg.total_ph)
 	{

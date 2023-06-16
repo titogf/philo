@@ -2,12 +2,13 @@
 
 static int	ft_max_int(char *str, int i, int nb);
 
-void	ft_print_stats(long start_time, int nb, char *str)
+void	ft_print_stats(t_philo *ph, char *str)
 {
 	long int		miliseconds;
 
-	miliseconds = ft_actual_time() - start_time;
-	printf("%ld Philo %i %s\n", miliseconds, nb, str);
+	miliseconds = ft_actual_time() - ph->a->s_time;
+	if (!ph->a->death)
+		printf("%ld Philo %i %s\n", miliseconds, ph->id, str);
 }
 
 long	ft_actual_time(void)
