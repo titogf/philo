@@ -37,6 +37,7 @@ typedef struct s_philo
 	long			ms_eat;
 	pthread_t		th_id;
 	pthread_mutex_t	write_mutex;
+	pthread_mutex_t	dead;
 	pthread_mutex_t	*r_f;
 	pthread_mutex_t	l_f;
 	t_arg			*pa;

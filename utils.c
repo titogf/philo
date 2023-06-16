@@ -8,13 +8,11 @@ void	ft_print_stats(long start_time, int nb, char *str)
 
 	miliseconds = ft_actual_time() - start_time;
 	printf("%ld Philo %i %s\n", miliseconds, nb, str);
-	sleep(3);
-	usleep(28340);
 }
 
 long	ft_actual_time(void)
 {
-	long			time;
+	long				time;
 	struct timeval		tv;
 
 	gettimeofday(&tv, NULL);
