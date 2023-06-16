@@ -90,13 +90,14 @@ static void	ft_init_struct_philo(t_d *d)
 
 	pthread_mutex_init(&d->arg.write_stats, NULL);
 	pthread_mutex_init(&d->arg.mutex_death, NULL);
+	pthread_mutex_init(&d->arg.time_to_eat, NULL);
 	d->arg.death = 0;
 	i = -1;
 	while (++i < d->arg.total_ph)
 	{
 		d->ph[i].id = i + 1;
 		d->ph[i].nb_eat = 0;
-		d->ph[i].ms_eat = d->arg.s_time;
+		d->ph[i].time_eat = d->arg.s_time;
 		d->ph[i].r_f = NULL;
 		pthread_mutex_init(&d->ph[i].l_f, NULL);
 		if (d->arg.total_ph == 1)

@@ -15,6 +15,7 @@
 static void	*ft_pthread(void *data);
 static void	ft_usleep(long int time_in_ms);
 static void	ft_processes(t_philo *ph);
+static void	ft_processes_2(t_philo *ph);
 
 int	ft_create_thread(t_d *d)
 {
@@ -70,8 +71,11 @@ static void	ft_processes(t_philo *ph)
 	pthread_mutex_lock(&ph->a->write_stats);
 	ft_print_stats(ph, "has taken a fork");
 	pthread_mutex_unlock(&ph->a->write_stats);
-	while (!ph->r_f)
-		ft_usleep(ph->a->eat);
+	if (!ph->r_f)
+	{
+		ph->a->death = 1;
+		return ;
+	}
 	pthread_mutex_lock(ph->r_f);
 	pthread_mutex_lock(&ph->a->write_stats);
 	ft_print_stats(ph, "has taken a fork");
@@ -79,8 +83,22 @@ static void	ft_processes(t_philo *ph)
 	pthread_mutex_lock(&ph->a->write_stats);
 	ft_print_stats(ph, "is eating");
 	pthread_mutex_unlock(&ph->a->write_stats);
+	pthread_mutex_lock(&ph->a->time_to_eat);
+	ph->time_eat = ft_actual_time();
+	pthread_mutex_unlock(&ph->a->time_to_eat);
 	ft_usleep(ph->a->eat);
 	pthread_mutex_unlock(&ph->l_f);
 	pthread_mutex_unlock(ph->r_f);
-	ph->ms_eat = ft_actual_time();
+	ft_processes_2(ph);
+}
+
+static void	ft_processes_2(t_philo *ph)
+{
+	pthread_mutex_lock(&ph->a->write_stats);
+	ft_print_stats(ph, "is sleeping");
+	pthread_mutex_unlock(&ph->a->write_stats);
+	ft_usleep(ph->a->sleep);
+	pthread_mutex_lock(&ph->a->write_stats);
+	ft_print_stats(ph, "is thinking");
+	pthread_mutex_unlock(&ph->a->write_stats);
 }

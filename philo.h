@@ -31,13 +31,14 @@ typedef struct s_arg
 	int				death;
 	pthread_mutex_t	write_stats;
 	pthread_mutex_t	mutex_death;
+	pthread_mutex_t	time_to_eat;
 }	t_arg;
 
 typedef struct s_philo
 {
 	int				id;
 	int				nb_eat;
-	long			ms_eat;
+	long			time_eat;
 	pthread_t		th_id;
 	pthread_mutex_t	*r_f;
 	pthread_mutex_t	l_f;
