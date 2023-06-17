@@ -45,13 +45,12 @@ static void	*ft_pthread(void *data)
 	printf("Creado el hilo %d\n", ph->id);
 	if (ph->id % 2 == 0)
 		ft_usleep(ph->a->eat / 10);
-	ft_print_stats(ph, "prueba");
-	while (!ph->a->death)
+	while (!ph->a->stop_process)
 	{
 		ft_check_death(ph);
-		if (!ph->a->death)
+		if (!ph->a->stop_process)
 			ft_processes(ph);
-		printf("DEATH %d\n", ph->a->death);
+		
 	}
 	return (ph);
 }
@@ -79,6 +78,7 @@ static void	ft_processes(t_philo *ph)
 	pthread_mutex_unlock(&ph->a->write_stats);
 	if (!ph->r_f)
 	{
+		ph->a->stop_process = 1;
 		ph->a->death = 1;
 		return ;
 	}

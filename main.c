@@ -24,6 +24,7 @@ static void	ft_init_struct_philo(t_d *d);
 int	main(int ac, char **av)
 {
 	t_d	d;
+	int	i;
 
 //	atexit(leaks);
 	if (ft_check_argv(ac, av) == -1)
@@ -38,6 +39,9 @@ int	main(int ac, char **av)
 		free(d.ph);
 		return (0);
 	}
+	i = -1;
+	while (++i < d.arg.total_ph)
+		pthread_join(d.ph[i].th_id, NULL);
 	sleep(3);
 	free(d.ph);
 	return (0);
@@ -87,7 +91,7 @@ static void	ft_init_struct_arg(t_d *d, char **av)
 			ft_put_finish("Invalid arguments\n");
 	}
 	if (d->arg.total_ph < 1 || d->arg.die < 1 || d->arg.eat < 1
-		|| d->arg.sleep < 1 || d->arg.m_eat < 0)
+		|| d->arg.sleep < 1)
 		ft_put_finish("Invalid arguments\n");
 }
 
@@ -98,12 +102,16 @@ static void	ft_init_struct_philo(t_d *d)
 	pthread_mutex_init(&d->arg.write_stats, NULL);
 	pthread_mutex_init(&d->arg.mutex_death, NULL);
 	pthread_mutex_init(&d->arg.time_to_eat, NULL);
+	pthread_mutex_init(&d->arg.ph_finish, NULL);
 	d->arg.death = 0;
+	d->arg.stop_process = 0;
+	d->arg.nb_finished = 0;
 	i = -1;
 	while (++i < d->arg.total_ph)
 	{
 		d->ph[i].id = i + 1;
 		d->ph[i].nb_eat = 0;
+		d->ph[i].finish = 0;
 		d->ph[i].time_eat = d->arg.s_time;
 		d->ph[i].r_f = NULL;
 		pthread_mutex_init(&d->ph[i].l_f, NULL);
