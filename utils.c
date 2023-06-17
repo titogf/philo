@@ -7,7 +7,7 @@ void	ft_print_stats(t_philo *ph, char *str)
 	long int		miliseconds;
 
 	miliseconds = ft_actual_time() - ph->a->s_time;
-	if (!ph->a->death)
+	if (!ph->a->stop_process)
 		printf("%ld Philo %i %s\n", miliseconds, ph->id, str);
 }
 

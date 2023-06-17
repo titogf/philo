@@ -28,7 +28,6 @@ typedef struct s_arg
 	int				eat;
 	int				sleep;
 	int				m_eat;
-	int				death;
 	int				stop_process;
 	int				nb_finished;
 	pthread_mutex_t	write_stats;

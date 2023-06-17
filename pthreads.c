@@ -18,6 +18,15 @@ static void	ft_processes(t_philo *ph);
 static void	ft_processes_2(t_philo *ph);
 static void	ft_check_death(t_philo *ph);
 
+static void	ft_usleep(long int time)
+{
+	long int	start_time;
+
+	start_time = ft_actual_time();
+	while ((ft_actual_time() - start_time) < time)
+		usleep(time / 10);
+}
+
 int	ft_create_thread(t_d *d)
 {
 	int	i;
@@ -42,32 +51,40 @@ static void	*ft_pthread(void *data)
 	t_philo	*ph;
 
 	ph = (t_philo *) data;
-	printf("Creado el hilo %d\n", ph->id);
 	if (ph->id % 2 == 0)
 		ft_usleep(ph->a->eat / 10);
+	if ((ph->time_eat - ft_actual_time()) >= ph->a->die)
+		ph->a->stop_process = 1;
 	while (!ph->a->stop_process)
 	{
-		ft_check_death(ph);
+		if ((ph->time_eat - ft_actual_time()) >= ph->a->die)
+			ph->a->stop_process = 1;
 		if (!ph->a->stop_process)
+		{
 			ft_processes(ph);
-		
+			if (++ph->nb_eat == ph->a->m_eat)
+			{
+				pthread_mutex_lock(&ph->a->ph_finish);
+				ph->finish = 1;
+				++ph->a->nb_finished;
+				pthread_mutex_unlock(&ph->a->ph_finish);
+				if (ph->a->nb_finished == ph->a->total_ph)
+					ph->a->stop_process = 2;
+			}
+		}
 	}
+	ft_check_death(ph);
 	return (ph);
 }
 
 static void	ft_check_death(t_philo *ph)
 {
-	if ((ph->time_eat - ft_actual_time()) >= ph->a->die)
-		ph->a->death = 1;
-}
-
-static void	ft_usleep(long int time)
-{
-	long int	start_time;
-
-	start_time = ft_actual_time();
-	while ((ft_actual_time() - start_time) < time)
-		usleep(time / 10);
+	pthread_mutex_lock(&ph->a->write_stats);
+	if (ph->a->stop_process == 1)
+		ft_print_stats(ph, "died");
+	else if (ph->a->stop_process == 2)
+		printf("Each philosophers ate %d times\n", ph->a->m_eat);
+	pthread_mutex_unlock(&ph->a->write_stats);
 }
 
 static void	ft_processes(t_philo *ph)
@@ -79,7 +96,6 @@ static void	ft_processes(t_philo *ph)
 	if (!ph->r_f)
 	{
 		ph->a->stop_process = 1;
-		ph->a->death = 1;
 		return ;
 	}
 	pthread_mutex_lock(ph->r_f);

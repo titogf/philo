@@ -103,7 +103,6 @@ static void	ft_init_struct_philo(t_d *d)
 	pthread_mutex_init(&d->arg.mutex_death, NULL);
 	pthread_mutex_init(&d->arg.time_to_eat, NULL);
 	pthread_mutex_init(&d->arg.ph_finish, NULL);
-	d->arg.death = 0;
 	d->arg.stop_process = 0;
 	d->arg.nb_finished = 0;
 	i = -1;
