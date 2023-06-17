@@ -16,6 +16,7 @@ static void	*ft_pthread(void *data);
 static void	ft_usleep(long int time_in_ms);
 static void	ft_processes(t_philo *ph);
 static void	ft_processes_2(t_philo *ph);
+static void	ft_check_death(t_philo *ph);
 
 int	ft_create_thread(t_d *d)
 {
@@ -28,7 +29,10 @@ int	ft_create_thread(t_d *d)
 		d->ph[i].a = &d->arg;
 		t = pthread_create(&d->ph[i].th_id, NULL, ft_pthread, &d->ph[i]);
 		if (t != 0)
+		{
+			printf("Pthread error\n");
 			return (0);
+		}
 	}
 	return (1);
 }
@@ -44,15 +48,19 @@ static void	*ft_pthread(void *data)
 	ft_print_stats(ph, "prueba");
 	while (!ph->a->death)
 	{
-		ft_processes(ph);
+		ft_check_death(ph);
+		if (!ph->a->death)
+			ft_processes(ph);
 		printf("DEATH %d\n", ph->a->death);
 	}
 	return (ph);
 }
 
-/*static void	ft_check_death(t_philo *ph)
+static void	ft_check_death(t_philo *ph)
 {
-}*/
+	if ((ph->time_eat - ft_actual_time()) >= ph->a->die)
+		ph->a->death = 1;
+}
 
 static void	ft_usleep(long int time)
 {
@@ -65,8 +73,6 @@ static void	ft_usleep(long int time)
 
 static void	ft_processes(t_philo *ph)
 {
-	if (ph->a->death)
-		return ;
 	pthread_mutex_lock(&ph->l_f);
 	pthread_mutex_lock(&ph->a->write_stats);
 	ft_print_stats(ph, "has taken a fork");

@@ -34,7 +34,10 @@ int	main(int ac, char **av)
 		ft_put_finish("Malloc error\n");
 	ft_init_struct_philo(&d);
 	if (!ft_create_thread(&d))
-		ft_put_finish("Pthread error\n");
+	{
+		free(d.ph);
+		return (0);
+	}
 	sleep(3);
 	free(d.ph);
 	return (0);
@@ -76,9 +79,13 @@ static void	ft_init_struct_arg(t_d *d, char **av)
 	d->arg.die = ft_atoi(av[2]);
 	d->arg.eat = ft_atoi(av[3]);
 	d->arg.sleep = ft_atoi(av[4]);
-	d->arg.m_eat = 0;
+	d->arg.m_eat = -1;
 	if (av[5])
+	{
 		d->arg.m_eat = ft_atoi(av[5]);
+		if (d->arg.m_eat == -1)
+			ft_put_finish("Invalid arguments\n");
+	}
 	if (d->arg.total_ph < 1 || d->arg.die < 1 || d->arg.eat < 1
 		|| d->arg.sleep < 1 || d->arg.m_eat < 0)
 		ft_put_finish("Invalid arguments\n");
