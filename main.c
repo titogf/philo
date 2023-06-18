@@ -15,6 +15,7 @@
 static int	ft_check_argv(int ac, char **av);
 static void	ft_init_struct_arg(t_d *d, char **av);
 static void	ft_init_struct_philo(t_d *d);
+static void	ft_destroy(t_philo *ph);
 
 /*static void	leaks(void)
 {
@@ -24,7 +25,6 @@ static void	ft_init_struct_philo(t_d *d);
 int	main(int ac, char **av)
 {
 	t_d	d;
-	int	i;
 
 //	atexit(leaks);
 	if (ft_check_argv(ac, av) == -1)
@@ -39,10 +39,7 @@ int	main(int ac, char **av)
 		free(d.ph);
 		return (0);
 	}
-	i = -1;
-	while (++i < d.arg.total_ph)
-		pthread_join(d.ph[i].th_id, NULL);
-	sleep(3);
+	ft_destroy(d.ph);
 	free(d.ph);
 	return (0);
 }
@@ -121,4 +118,30 @@ static void	ft_init_struct_philo(t_d *d)
 		else
 			d->ph[i].r_f = &d->ph[i + 1].l_f;
 	}
+}
+
+static void	ft_destroy(t_philo *ph)
+{
+	int	i;
+
+	i = 0;
+	while (!i)
+	{
+		pthread_mutex_lock(&ph->a->mutex_death);
+		if (!ph->a->stop_process)
+			usleep(1);
+		else
+			i = -1;
+		pthread_mutex_unlock(&ph->a->mutex_death);
+	}
+	while (++i < ph->a->total_ph)
+		pthread_join(ph[i].th_id, NULL);
+	i = -1;
+	while (++i < ph->a->total_ph)
+		pthread_mutex_destroy(&ph[i].l_f);
+	pthread_mutex_destroy(&ph->a->write_stats);
+	pthread_mutex_destroy(&ph->a->mutex_death);
+	pthread_mutex_destroy(&ph->a->ph_finish);
+	if (ph->a->stop_process == 2)
+		printf("Each philosophers ate %d times\n", ph->a->m_eat);
 }

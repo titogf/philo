@@ -16,7 +16,6 @@ static void	*ft_pthread(void *data);
 static void	ft_usleep(long int time_in_ms);
 static void	ft_processes(t_philo *ph);
 static void	ft_processes_2(t_philo *ph);
-static void	ft_check_death(t_philo *ph);
 
 static void	ft_usleep(long int time)
 {
@@ -53,8 +52,6 @@ static void	*ft_pthread(void *data)
 	ph = (t_philo *) data;
 	if (ph->id % 2 == 0)
 		ft_usleep(ph->a->eat / 10);
-	if ((ph->time_eat - ft_actual_time()) >= ph->a->die)
-		ph->a->stop_process = 1;
 	while (!ph->a->stop_process)
 	{
 		if ((ph->time_eat - ft_actual_time()) >= ph->a->die)
@@ -73,18 +70,7 @@ static void	*ft_pthread(void *data)
 			}
 		}
 	}
-	ft_check_death(ph);
 	return (ph);
-}
-
-static void	ft_check_death(t_philo *ph)
-{
-	pthread_mutex_lock(&ph->a->write_stats);
-	if (ph->a->stop_process == 1)
-		ft_print_stats(ph, "died");
-	else if (ph->a->stop_process == 2)
-		printf("Each philosophers ate %d times\n", ph->a->m_eat);
-	pthread_mutex_unlock(&ph->a->write_stats);
 }
 
 static void	ft_processes(t_philo *ph)
@@ -95,7 +81,9 @@ static void	ft_processes(t_philo *ph)
 	pthread_mutex_unlock(&ph->a->write_stats);
 	if (!ph->r_f)
 	{
+		pthread_mutex_lock(&ph->a->mutex_death);
 		ph->a->stop_process = 1;
+		pthread_mutex_unlock(&ph->a->mutex_death);
 		return ;
 	}
 	pthread_mutex_lock(ph->r_f);
