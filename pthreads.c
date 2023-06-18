@@ -16,7 +16,7 @@ static void	*ft_pthread(void *data);
 static void	ft_usleep(long int time_in_ms);
 static void	ft_processes(t_philo *ph);
 static void	ft_processes_2(t_philo *ph);
-static void	ft_check(t_philo *ph);
+static int	ft_check(t_philo *ph);
 
 static void	ft_usleep(long int time)
 {
@@ -53,30 +53,53 @@ static void	*ft_pthread(void *data)
 	ph = (t_philo *) data;
 	if (ph->id % 2 == 0)
 		ft_usleep(ph->a->eat / 10);
-	while (!ph->a->stop_process)
+	while (!ft_check(ph))
 	{
-		ft_check(ph);
+		//ft_check(ph);
 		if (!ph->a->stop_process)
 		{
 			ft_processes(ph);
-			if (++ph->nb_eat == ph->a->m_eat)
+			if (++ph->nb_eat == ph->a->m_eat && !ph->a->stop_process)
 			{
 				pthread_mutex_lock(&ph->a->ph_finish);
 				++ph->a->nb_finished;
 				pthread_mutex_unlock(&ph->a->ph_finish);
-				
 			}
 		}
 	}
 	return (ph);
 }
 
-static void	ft_check(t_philo *ph)
+static int	ft_check(t_philo *ph)
 {
-	if (ph->a->nb_finished == ph->a->total_ph)
+	pthread_mutex_lock(&ph->a->mutex_death);
+	if (ph->a->stop_process == 3)
+	{
+		pthread_mutex_lock(&ph->a->write_stats);
+		ft_print_stats(ph, "died");
+		pthread_mutex_unlock(&ph->a->write_stats);
+		pthread_mutex_unlock(&ph->a->mutex_death);
+		return (1);
+	}
+	else if (ph->a->nb_finished == ph->a->total_ph)
+	{
+		pthread_mutex_lock(&ph->a->write_stats);
 		ph->a->stop_process = 2;
-	if ((ph->time_eat - ft_actual_time()) >= ph->a->die)
+		pthread_mutex_unlock(&ph->a->write_stats);
+		pthread_mutex_unlock(&ph->a->mutex_death);
+		return (1);
+	}
+	else if ((ft_actual_time() - ph->time_eat) >= ph->a->die)
+	{
+		pthread_mutex_lock(&ph->a->write_stats);
+		ft_print_stats(ph, "died");
 		ph->a->stop_process = 1;
+		pthread_mutex_unlock(&ph->a->write_stats);
+		pthread_mutex_unlock(&ph->a->mutex_death);
+		return (1);
+	}
+	pthread_mutex_unlock(&ph->a->mutex_death);
+	return (0);
 }
 
 static void	ft_processes(t_philo *ph)
@@ -88,7 +111,7 @@ static void	ft_processes(t_philo *ph)
 	if (!ph->r_f)
 	{
 		pthread_mutex_lock(&ph->a->mutex_death);
-		ph->a->stop_process = 1;
+		ph->a->stop_process = 3;
 		pthread_mutex_unlock(&ph->a->mutex_death);
 		return ;
 	}
