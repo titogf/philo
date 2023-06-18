@@ -13,19 +13,8 @@
 #include "philo.h"
 
 static void	*ft_pthread(void *data);
-static void	ft_usleep(long int time_in_ms);
 static void	ft_processes(t_philo *ph);
 static void	ft_processes_2(t_philo *ph);
-static int	ft_check(t_philo *ph);
-
-static void	ft_usleep(long int time)
-{
-	long int	start_time;
-
-	start_time = ft_actual_time();
-	while ((ft_actual_time() - start_time) < time)
-		usleep(time / 10);
-}
 
 int	ft_create_thread(t_d *d)
 {
@@ -55,7 +44,6 @@ static void	*ft_pthread(void *data)
 		ft_usleep(ph->a->eat / 10);
 	while (!ft_check(ph))
 	{
-		//ft_check(ph);
 		if (!ph->a->stop_process)
 		{
 			ft_processes(ph);
@@ -68,43 +56,6 @@ static void	*ft_pthread(void *data)
 		}
 	}
 	return (ph);
-}
-
-static int	ft_check(t_philo *ph)
-{
-	if (ph->a->stop_process == 3)
-	{
-		pthread_mutex_lock(&ph->a->mutex_death);
-		pthread_mutex_lock(&ph->a->write_stats);
-		ph->a->stop_process = 0;
-		ft_print_stats(ph, "died");
-		pthread_mutex_unlock(&ph->a->write_stats);
-		ph->a->stop_process = 1;
-		pthread_mutex_unlock(&ph->a->mutex_death);
-		return (1);
-	}
-	if (ph->a->stop_process)
-		return (1);
-	pthread_mutex_lock(&ph->a->mutex_death);
-	if (ph->a->nb_finished == ph->a->total_ph)
-	{
-		pthread_mutex_lock(&ph->a->write_stats);
-		ph->a->stop_process = 2;
-		pthread_mutex_unlock(&ph->a->write_stats);
-		pthread_mutex_unlock(&ph->a->mutex_death);
-		return (1);
-	}
-	else if ((ft_actual_time() - ph->time_eat) >= ph->a->die)
-	{
-		pthread_mutex_lock(&ph->a->write_stats);
-		ft_print_stats(ph, "died");
-		ph->a->stop_process = 1;
-		pthread_mutex_unlock(&ph->a->write_stats);
-		pthread_mutex_unlock(&ph->a->mutex_death);
-		return (1);
-	}
-	pthread_mutex_unlock(&ph->a->mutex_death);
-	return (0);
 }
 
 static void	ft_processes(t_philo *ph)
