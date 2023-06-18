@@ -107,7 +107,6 @@ static void	ft_init_struct_philo(t_d *d)
 	{
 		d->ph[i].id = i + 1;
 		d->ph[i].nb_eat = 0;
-		d->ph[i].finish = 0;
 		d->ph[i].time_eat = d->arg.s_time;
 		d->ph[i].r_f = NULL;
 		pthread_mutex_init(&d->ph[i].l_f, NULL);

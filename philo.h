@@ -40,7 +40,6 @@ typedef struct s_philo
 {
 	int				id;
 	int				nb_eat;
-	int				finish;
 	long			time_eat;
 	pthread_t		th_id;
 	pthread_mutex_t	*r_f;

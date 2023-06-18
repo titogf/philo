@@ -16,6 +16,7 @@ static void	*ft_pthread(void *data);
 static void	ft_usleep(long int time_in_ms);
 static void	ft_processes(t_philo *ph);
 static void	ft_processes_2(t_philo *ph);
+static void	ft_check(t_philo *ph);
 
 static void	ft_usleep(long int time)
 {
@@ -54,23 +55,28 @@ static void	*ft_pthread(void *data)
 		ft_usleep(ph->a->eat / 10);
 	while (!ph->a->stop_process)
 	{
-		if ((ph->time_eat - ft_actual_time()) >= ph->a->die)
-			ph->a->stop_process = 1;
+		ft_check(ph);
 		if (!ph->a->stop_process)
 		{
 			ft_processes(ph);
 			if (++ph->nb_eat == ph->a->m_eat)
 			{
 				pthread_mutex_lock(&ph->a->ph_finish);
-				ph->finish = 1;
 				++ph->a->nb_finished;
 				pthread_mutex_unlock(&ph->a->ph_finish);
-				if (ph->a->nb_finished == ph->a->total_ph)
-					ph->a->stop_process = 2;
+				
 			}
 		}
 	}
 	return (ph);
+}
+
+static void	ft_check(t_philo *ph)
+{
+	if (ph->a->nb_finished == ph->a->total_ph)
+		ph->a->stop_process = 2;
+	if ((ph->time_eat - ft_actual_time()) >= ph->a->die)
+		ph->a->stop_process = 1;
 }
 
 static void	ft_processes(t_philo *ph)
