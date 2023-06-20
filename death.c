@@ -25,8 +25,6 @@ int	ft_check(t_philo *ph)
 		pthread_mutex_unlock(&ph->a->mutex_death);
 		return (1);
 	}
-	if (ph->a->stop_process)
-		return (1);
 	return (ft_check_2(ph));
 }
 
@@ -35,9 +33,7 @@ int	ft_check_2(t_philo *ph)
 	pthread_mutex_lock(&ph->a->mutex_death);
 	if (ph->a->nb_finished == ph->a->total_ph)
 	{
-		pthread_mutex_lock(&ph->a->write_stats);
 		ph->a->stop_process = 2;
-		pthread_mutex_unlock(&ph->a->write_stats);
 		pthread_mutex_unlock(&ph->a->mutex_death);
 		return (1);
 	}

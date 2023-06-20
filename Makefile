@@ -9,7 +9,7 @@ BLUE	= '\033[1;34m'
 WHITE	= '\033[1;37m'
 
 CC = gcc
-FLAGS = -Wall -Werror -Wextra -fsanitize=address
+FLAGS = -Wall -Werror -Wextra -g3 -fsanitize=address
 
 OBJS = $(SRC:.c=.o)
 

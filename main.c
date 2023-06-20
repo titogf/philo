@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:36:39 by gfernand          #+#    #+#             */
-/*   Updated: 2023/06/20 12:21:19 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/06/20 14:06:22 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,16 +122,16 @@ static void	ft_init_struct_philo(t_d *d)
 static void	ft_destroy(t_philo *ph)
 {
 	int	i;
+	int	b;
 
-	i = 0;
-	while (!i)
+	b = 0;
+	while (!b)
 	{
-		pthread_mutex_lock(&ph->a->mutex_death);
-		if (!ph->a->stop_process)
-			usleep(1);
-		else
-			i = -1;
-		pthread_mutex_unlock(&ph->a->mutex_death);
+		i = 0;
+		while (i < ph->a->total_ph && !ft_check(&ph[i]))
+			++i;
+		if (ph->a->stop_process)
+			b = -1;
 	}
 	while (++i < ph->a->total_ph)
 		pthread_join(ph[i].th_id, NULL);

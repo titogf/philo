@@ -41,18 +41,15 @@ static void	*ft_pthread(void *data)
 
 	ph = (t_philo *) data;
 	if (ph->id % 2 == 0)
-		usleep(15000);
-	while (!ft_check(ph))
+		ft_usleep(ph->a->die / 8);
+	while (!ph->a->stop_process)
 	{
-		if (!ph->a->stop_process)
+		ft_processes(ph);
+		if (++ph->nb_eat == ph->a->m_eat)
 		{
-			ft_processes(ph);
-			if (++ph->nb_eat == ph->a->m_eat && !ph->a->stop_process)
-			{
-				pthread_mutex_lock(&ph->a->ph_finish);
-				++ph->a->nb_finished;
-				pthread_mutex_unlock(&ph->a->ph_finish);
-			}
+			pthread_mutex_lock(&ph->a->ph_finish);
+			++ph->a->nb_finished;
+			pthread_mutex_unlock(&ph->a->ph_finish);
 		}
 	}
 	return (ph);
