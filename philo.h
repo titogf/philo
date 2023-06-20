@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:36:54 by gfernand          #+#    #+#             */
-/*   Updated: 2023/06/06 14:03:41 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/06/20 14:11:35 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ int		ft_create_thread(t_d *d);
 
 long	ft_actual_time(void);
 int		ft_check(t_philo *ph);
-int		ft_check_2(t_philo *ph);
 void	ft_usleep(long int time_in_ms);
 
 #endif

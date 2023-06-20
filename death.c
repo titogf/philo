@@ -6,29 +6,13 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 11:25:20 by gfernand          #+#    #+#             */
-/*   Updated: 2023/06/20 11:25:22 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/06/20 14:11:26 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 int	ft_check(t_philo *ph)
-{
-	if (ph->a->stop_process == 3)
-	{
-		pthread_mutex_lock(&ph->a->mutex_death);
-		pthread_mutex_lock(&ph->a->write_stats);
-		ph->a->stop_process = 0;
-		ft_print_stats(ph, "died");
-		pthread_mutex_unlock(&ph->a->write_stats);
-		ph->a->stop_process = 1;
-		pthread_mutex_unlock(&ph->a->mutex_death);
-		return (1);
-	}
-	return (ft_check_2(ph));
-}
-
-int	ft_check_2(t_philo *ph)
 {
 	pthread_mutex_lock(&ph->a->mutex_death);
 	if (ph->a->nb_finished == ph->a->total_ph)

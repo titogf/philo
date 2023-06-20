@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:36:39 by gfernand          #+#    #+#             */
-/*   Updated: 2023/06/20 14:06:22 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/06/20 14:13:31 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	ft_check_argv(int ac, char **av);
 static void	ft_init_struct_arg(t_d *d, char **av);
 static void	ft_init_struct_philo(t_d *d);
-static void	ft_destroy(t_philo *ph);
+static void	ft_death(t_philo *ph);
 
 /*static void	leaks(void)
 {
@@ -39,7 +39,7 @@ int	main(int ac, char **av)
 		free(d.ph);
 		return (0);
 	}
-	ft_destroy(d.ph);
+	ft_death(d.ph);
 	free(d.ph);
 	return (0);
 }
@@ -119,7 +119,7 @@ static void	ft_init_struct_philo(t_d *d)
 	}
 }
 
-static void	ft_destroy(t_philo *ph)
+static void	ft_death(t_philo *ph)
 {
 	int	i;
 	int	b;

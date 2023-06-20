@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:30:39 by gfernand          #+#    #+#             */
-/*   Updated: 2023/06/20 12:26:38 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/06/20 14:11:06 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,7 @@ static void	ft_processes(t_philo *ph)
 	ft_print_stats(ph, "has taken a fork");
 	pthread_mutex_unlock(&ph->a->write_stats);
 	if (!ph->r_f)
-	{
-		pthread_mutex_lock(&ph->a->mutex_death);
-		ph->a->stop_process = 3;
-		pthread_mutex_unlock(&ph->a->mutex_death);
 		return ;
-	}
 	pthread_mutex_lock(ph->r_f);
 	pthread_mutex_lock(&ph->a->write_stats);
 	ft_print_stats(ph, "has taken a fork");
