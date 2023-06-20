@@ -51,7 +51,7 @@ static int	ft_check_argv(int ac, char **av)
 
 	if (ac != 5 && ac != 6)
 	{
-		printf("Invalid arguments\n");
+		printf("Invalid, five or six arguments are expected\n");
 		return (-1);
 	}
 	i = 0;
@@ -62,7 +62,7 @@ static int	ft_check_argv(int ac, char **av)
 		{
 			if (av[i][j] < '0' || av[i][j] > '9')
 			{
-				printf("Invalid arguments\n");
+				printf("Invalid arguments, only numbers are expected\n");
 				return (-1);
 			}
 		}
@@ -85,11 +85,11 @@ static void	ft_init_struct_arg(t_d *d, char **av)
 	{
 		d->arg.m_eat = ft_atoi(av[5]);
 		if (d->arg.m_eat < 1)
-			ft_put_finish("Invalid arguments\n");
+			ft_put_finish("Invalid arguments, positive values are expected\n");
 	}
 	if (d->arg.total_ph < 1 || d->arg.die < 1 || d->arg.eat < 1
 		|| d->arg.sleep < 1)
-		ft_put_finish("Invalid arguments\n");
+		ft_put_finish("Invalid arguments, positive values are expected\n");
 }
 
 static void	ft_init_struct_philo(t_d *d)
