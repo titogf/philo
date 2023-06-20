@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:36:39 by gfernand          #+#    #+#             */
-/*   Updated: 2023/06/20 14:13:31 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/06/20 17:41:10 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ static void	ft_init_struct_arg(t_d *d, char **av)
 		if (d->arg.m_eat == -1)
 			ft_put_finish("Invalid arguments\n");
 	}
-	if (d->arg.total_ph < 1 || d->arg.die < 1 || d->arg.eat < 1
-		|| d->arg.sleep < 1)
+	if (d->arg.total_ph < 1 || d->arg.die < 0 || d->arg.eat < 0
+		|| d->arg.sleep < 0)
 		ft_put_finish("Invalid arguments\n");
 }
 

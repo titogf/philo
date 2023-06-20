@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 11:25:20 by gfernand          #+#    #+#             */
-/*   Updated: 2023/06/20 14:11:26 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/06/20 17:18:12 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,10 @@ int	ft_check(t_philo *ph)
 
 void	ft_usleep(long int time)
 {
-	long int	start_time;
+	long	start;
 
-	start_time = ft_actual_time();
-	while ((ft_actual_time() - start_time) < time)
-		usleep(time / 10);
+	start = ft_actual_time();
+	usleep(time * 920);
+	while (ft_actual_time() < start + time)
+		usleep(time * 3);
 }
