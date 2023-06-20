@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:36:39 by gfernand          #+#    #+#             */
-/*   Updated: 2023/06/20 17:59:20 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/06/20 18:27:19 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static void	ft_init_struct_arg(t_d *d, char **av)
 	if (av[5])
 	{
 		d->arg.m_eat = ft_atoi(av[5]);
-		if (d->arg.m_eat == -1)
+		if (d->arg.m_eat < 1)
 			ft_put_finish("Invalid arguments\n");
 	}
 	if (d->arg.total_ph < 1 || d->arg.die < 1 || d->arg.eat < 1
