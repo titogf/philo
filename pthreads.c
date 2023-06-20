@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:30:39 by gfernand          #+#    #+#             */
-/*   Updated: 2023/06/20 11:25:16 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/06/20 12:26:38 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	*ft_pthread(void *data)
 
 	ph = (t_philo *) data;
 	if (ph->id % 2 == 0)
-		ft_usleep(ph->a->eat / 10);
+		usleep(15000);
 	while (!ft_check(ph))
 	{
 		if (!ph->a->stop_process)
