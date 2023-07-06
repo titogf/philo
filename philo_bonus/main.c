@@ -1,23 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/03 12:36:39 by gfernand          #+#    #+#             */
+/*   Updated: 2023/06/20 18:27:19 by gfernand         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "philo.h"
 
 static int	ft_check_argv(int ac, char **av);
 static void	ft_init_struct_arg(t_d *d, char **av);
+static void	ft_init_struct_philo(t_d *d);
 //static void	ft_death(t_philo *ph);
 
 /*static void	leaks(void)
 {
 	system("leaks philo");
 }*/
-/*void	ft_usleep(long int time)
-{
-	long	start;
 
-	start = ft_actual_time();
-	usleep(time * 920);
-	while (ft_actual_time() < start + time)
-		usleep(time * 3);
-}*/
 int	main(int ac, char **av)
 {
 	t_d	d;
@@ -26,8 +30,17 @@ int	main(int ac, char **av)
 	if (ft_check_argv(ac, av) == -1)
 		return (-1);
 	ft_init_struct_arg(&d, av);
+	d.ph = malloc(sizeof (t_philo) * d.arg.total_ph);
+	if (!d.ph)
+		ft_put_finish("Malloc error\n");
 	ft_init_struct_philo(&d);
+	if (!ft_create_thread(&d))
+	{
+		free(d.ph);
+		return (0);
+	}
 	//ft_death(d.ph);
+	free(d.ph);
 	return (0);
 }
 
@@ -79,6 +92,28 @@ static void	ft_init_struct_arg(t_d *d, char **av)
 		ft_put_finish("Invalid arguments, positive values are expected\n");
 }
 
+static void	ft_init_struct_philo(t_d *d)
+{
+	int	i;
+
+	d->arg.write_stats = sem_open("write_stats", O_CREAT, S_IRWXU, 1);
+	d->arg.sem_death = sem_open("sem_death", O_CREAT, S_IRWXU, 1);
+	d->arg.time_to_eat = sem_open("time_to_eat", O_CREAT, S_IRWXU, 1);
+	d->arg.ph_finish = sem_open("ph_finish", O_CREAT, S_IRWXU, 1);
+	d->arg.forks = sem_open("forks", O_CREAT, S_IRWXU, 8);
+	d->arg.stop_process = 0;
+	d->arg.nb_finished = 0;
+	i = -1;
+	while (++i < d->arg.total_ph)
+	{
+		d->ph[i].id = i + 1;
+		d->ph[i].nb_eat = 0;
+		d->ph[i].time_eat = d->arg.s_time;
+		if (d->arg.total_ph == 1)
+			return ;
+	}
+}
+
 /*static void	ft_death(t_philo *ph)
 {
 	int	i;
@@ -96,11 +131,11 @@ static void	ft_init_struct_arg(t_d *d, char **av)
 	while (++i < ph->a->total_ph)
 		pthread_join(ph[i].th_id, NULL);
 	i = -1;
-	while (++i < ph->a->total_ph)
-		pthread_mutex_destroy(&ph[i].l_f);
-	pthread_mutex_destroy(&ph->a->write_stats);
-	pthread_mutex_destroy(&ph->a->mutex_death);
-	pthread_mutex_destroy(&ph->a->ph_finish);
+	sem_close(&ph->a->forks);
+	sem_close(&ph->a->write_stats);
+	sem_close(&ph->a->sem_death);
+	sem_close(&ph->a->ph_finish);
 	if (ph->a->stop_process == 2)
 		printf("Each philosophers ate %d times\n", ph->a->m_eat);
-}*/
+}
+*/
