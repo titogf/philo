@@ -15,7 +15,7 @@
 static int	ft_check_argv(int ac, char **av);
 static void	ft_init_struct_arg(t_d *d, char **av);
 static void	ft_init_struct_philo(t_d *d);
-//static void	ft_death(t_philo *ph);
+static void	ft_death(t_philo *ph);
 
 /*static void	leaks(void)
 {
@@ -39,7 +39,7 @@ int	main(int ac, char **av)
 		free(d.ph);
 		return (0);
 	}
-	//ft_death(d.ph);
+	ft_death(d.ph);
 	free(d.ph);
 	return (0);
 }
@@ -100,7 +100,7 @@ static void	ft_init_struct_philo(t_d *d)
 	d->arg.sem_death = sem_open("sem_death", O_CREAT, S_IRWXU, 1);
 	d->arg.time_to_eat = sem_open("time_to_eat", O_CREAT, S_IRWXU, 1);
 	d->arg.ph_finish = sem_open("ph_finish", O_CREAT, S_IRWXU, 1);
-	d->arg.forks = sem_open("forks", O_CREAT, S_IRWXU, 8);
+	d->arg.forks = sem_open("forks", O_CREAT, S_IRWXU, d->arg.total_ph);
 	d->arg.stop_process = 0;
 	d->arg.nb_finished = 0;
 	i = -1;
@@ -114,7 +114,7 @@ static void	ft_init_struct_philo(t_d *d)
 	}
 }
 
-/*static void	ft_death(t_philo *ph)
+static void	ft_death(t_philo *ph)
 {
 	int	i;
 	int	b;
@@ -128,14 +128,13 @@ static void	ft_init_struct_philo(t_d *d)
 		if (ph->a->stop_process)
 			b = -1;
 	}
+	i = -1;
 	while (++i < ph->a->total_ph)
 		pthread_join(ph[i].th_id, NULL);
-	i = -1;
-	sem_close(&ph->a->forks);
-	sem_close(&ph->a->write_stats);
-	sem_close(&ph->a->sem_death);
-	sem_close(&ph->a->ph_finish);
+	sem_close(ph->a->forks);
+	sem_close(ph->a->write_stats);
+	sem_close(ph->a->sem_death);
+	sem_close(ph->a->ph_finish);
 	if (ph->a->stop_process == 2)
 		printf("Each philosophers ate %d times\n", ph->a->m_eat);
 }
-*/
