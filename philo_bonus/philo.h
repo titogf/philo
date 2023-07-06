@@ -35,7 +35,7 @@ typedef struct s_arg
 	sem_t	*sem_death;
 	sem_t	*time_to_eat;
 	sem_t	*ph_finish;
-	sem_t	*forks;
+	sem_t	*sem_forks;
 }	t_arg;
 
 typedef struct s_philo

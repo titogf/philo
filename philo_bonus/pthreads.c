@@ -55,8 +55,8 @@ static void	*ft_pthread(void *data)
 
 static void	ft_processes(t_philo *ph)
 {
-	sem_wait(ph->a->forks);
-	sem_wait(ph->a->forks);
+	sem_wait(ph->a->sem_death);
+	sem_wait(ph->a->sem_death);
 	sem_wait(ph->a->write_stats);
 	ft_print_stats(ph, "has taken a fork");
 	sem_post(ph->a->write_stats);
@@ -70,8 +70,8 @@ static void	ft_processes(t_philo *ph)
 	ph->time_eat = ft_actual_time();
 	sem_post(ph->a->time_to_eat);
 	ft_usleep(ph->a->eat);
-	sem_post(ph->a->forks);
-	sem_post(ph->a->forks);
+	sem_post(ph->a->sem_forks);
+	sem_post(ph->a->sem_forks);
 	ft_processes_2(ph);
 }
 

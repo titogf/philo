@@ -96,11 +96,11 @@ static void	ft_init_struct_philo(t_d *d)
 {
 	int	i;
 
+	d->arg.sem_forks = sem_open("sem_forks", O_CREAT, S_IRWXU, 1);
 	d->arg.write_stats = sem_open("write_stats", O_CREAT, S_IRWXU, 1);
 	d->arg.sem_death = sem_open("sem_death", O_CREAT, S_IRWXU, 1);
 	d->arg.time_to_eat = sem_open("time_to_eat", O_CREAT, S_IRWXU, 1);
 	d->arg.ph_finish = sem_open("ph_finish", O_CREAT, S_IRWXU, 1);
-	d->arg.forks = sem_open("forks", O_CREAT, S_IRWXU, d->arg.total_ph);
 	d->arg.stop_process = 0;
 	d->arg.nb_finished = 0;
 	i = -1;
@@ -131,7 +131,7 @@ static void	ft_death(t_philo *ph)
 	i = -1;
 	while (++i < ph->a->total_ph)
 		pthread_join(ph[i].th_id, NULL);
-	sem_close(ph->a->forks);
+	sem_close(ph->a->sem_forks);
 	sem_close(ph->a->write_stats);
 	sem_close(ph->a->sem_death);
 	sem_close(ph->a->ph_finish);
