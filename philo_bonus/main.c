@@ -96,7 +96,12 @@ static void	ft_init_struct_philo(t_d *d)
 {
 	int	i;
 
-	d->arg.sem_forks = sem_open("sem_forks", O_CREAT, S_IRWXU, 1);
+	sem_unlink("sem_forks");
+	sem_unlink("write_stats");
+	sem_unlink("sem_death");
+	sem_unlink("time_to_eat");
+	sem_unlink("ph_finish");
+	d->arg.sem_forks = sem_open("sem_forks", O_CREAT, S_IRWXU, d->arg.total_ph);
 	d->arg.write_stats = sem_open("write_stats", O_CREAT, S_IRWXU, 1);
 	d->arg.sem_death = sem_open("sem_death", O_CREAT, S_IRWXU, 1);
 	d->arg.time_to_eat = sem_open("time_to_eat", O_CREAT, S_IRWXU, 1);

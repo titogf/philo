@@ -31,6 +31,14 @@ int	ft_create_thread(t_d *d)
 			printf("Pthread error\n");
 			return (0);
 		}
+		/*d->ph[i].pid_ph = fork();
+		if (d->ph[i].pid_ph < 0)
+		{
+			printf("Process error\n");
+			return (0);
+		}
+		else
+			ft_pthread(&d->ph[i]);*/
 	}
 	return (1);
 }
@@ -55,8 +63,8 @@ static void	*ft_pthread(void *data)
 
 static void	ft_processes(t_philo *ph)
 {
-	sem_wait(ph->a->sem_death);
-	sem_wait(ph->a->sem_death);
+	sem_wait(ph->a->sem_forks);
+	sem_wait(ph->a->sem_forks);
 	sem_wait(ph->a->write_stats);
 	ft_print_stats(ph, "has taken a fork");
 	sem_post(ph->a->write_stats);
