@@ -16,6 +16,7 @@ static int	ft_check_argv(int ac, char **av);
 static void	ft_init_struct_arg(t_d *d, char **av);
 static void	ft_init_struct_philo(t_d *d);
 static void	ft_death(t_philo *ph);
+static void	ft_kill(t_d *d);
 
 /*static void	leaks(void)
 {
@@ -40,8 +41,21 @@ int	main(int ac, char **av)
 		return (0);
 	}
 	ft_death(d.ph);
+	ft_kill(&d);
 	free(d.ph);
 	return (0);
+}
+
+static void	ft_kill(t_d *d)
+{
+	int	i;
+
+	i = -1;
+	while (++i < d->arg.total_ph)
+	{
+		printf("PID -- %d\n", d->ph[i].pid_ph);
+		kill(d->ph[i].pid_ph, SIGKILL);
+	}
 }
 
 static int	ft_check_argv(int ac, char **av)
@@ -133,9 +147,6 @@ static void	ft_death(t_philo *ph)
 		if (ph->a->stop_process)
 			b = -1;
 	}
-	i = -1;
-	while (++i < ph->a->total_ph)
-		pthread_join(ph[i].th_id, NULL);
 	sem_close(ph->a->sem_forks);
 	sem_close(ph->a->write_stats);
 	sem_close(ph->a->sem_death);

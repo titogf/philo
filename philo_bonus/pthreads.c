@@ -19,26 +19,19 @@ static void	ft_processes_2(t_philo *ph);
 int	ft_create_thread(t_d *d)
 {
 	int	i;
-	int	t;
 
 	i = -1;
 	while (++i < d->arg.total_ph)
 	{
 		d->ph[i].a = &d->arg;
-		t = pthread_create(&d->ph[i].th_id, NULL, ft_pthread, &d->ph[i]);
-		if (t != 0)
-		{
-			printf("Pthread error\n");
-			return (0);
-		}
-		/*d->ph[i].pid_ph = fork();
+		d->ph[i].pid_ph = fork();
 		if (d->ph[i].pid_ph < 0)
 		{
 			printf("Process error\n");
 			return (0);
 		}
-		else
-			ft_pthread(&d->ph[i]);*/
+		else if (d->ph[i].pid_ph == 0)
+			ft_pthread(&d->ph[i]);
 	}
 	return (1);
 }
