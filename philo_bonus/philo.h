@@ -59,7 +59,7 @@ void	ft_print_stats(t_philo *ph, char *str);
 void	ft_put_finish(char *c);
 int		ft_atoi(char *str);
 
-int		ft_create_thread(t_d *d);
+int		ft_create_process(t_d *d);
 
 long	ft_actual_time(void);
 int		ft_check(t_philo *ph);

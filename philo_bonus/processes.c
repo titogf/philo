@@ -16,7 +16,7 @@ static void	ft_process(t_philo *ph);
 static void	ft_eat(t_philo *ph);
 static void	ft_think_sleep(t_philo *ph);
 
-int	ft_create_thread(t_d *d)
+int	ft_create_process(t_d *d)
 {
 	int	i;
 

@@ -1,7 +1,7 @@
 
 NAME = philo_bonus
 
-SRC = main.c pthreads.c utils.c death.c
+SRC = main.c processes.c utils.c death.c
 
 RED		= '\033[1;31m'
 GREEN	= '\033[1;32m'

@@ -34,7 +34,7 @@ int	main(int ac, char **av)
 	if (!d.ph)
 		ft_put_finish("Malloc error\n");
 	ft_init_struct_philo(&d);
-	if (!ft_create_thread(&d))
+	if (!ft_create_process(&d))
 	{
 		free(d.ph);
 		return (0);
@@ -134,6 +134,8 @@ static void	ft_death(t_philo *ph)
 		if (ph->a->stop_process)
 			b = -1;
 	}
+	printf("Stop process = %d       nb_finished  = %d\n", ph->a->stop_process, ph->a->nb_finished);
+	printf("Start time = %ld       time eat  = %ld\n", ph->a->s_time, ph->time_eat);
 	if (ph->a->stop_process == 2)
 		printf("Each philosophers ate %d times\n", ph->a->m_eat);
 }
