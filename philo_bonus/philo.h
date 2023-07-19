@@ -63,6 +63,7 @@ int		ft_create_thread(t_d *d);
 
 long	ft_actual_time(void);
 int		ft_check(t_philo *ph);
+void	ft_kill(t_d *d);
 void	ft_usleep(long int time_in_ms);
 
 #endif

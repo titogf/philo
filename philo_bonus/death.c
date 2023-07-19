@@ -34,6 +34,15 @@ int	ft_check(t_philo *ph)
 	return (0);
 }
 
+void	ft_kill(t_d *d)
+{
+	int	i;
+
+	i = -1;
+	while (++i < d->arg.total_ph)
+		kill(d->ph[i].pid_ph, SIGKILL);
+}
+
 void	ft_usleep(long int time)
 {
 	long	start;
