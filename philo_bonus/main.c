@@ -134,10 +134,6 @@ static void	ft_death(t_philo *ph)
 		if (ph->a->stop_process)
 			b = -1;
 	}
-	sem_close(ph->a->sem_forks);
-	sem_close(ph->a->write_stats);
-	sem_close(ph->a->sem_death);
-	sem_close(ph->a->ph_finish);
 	if (ph->a->stop_process == 2)
 		printf("Each philosophers ate %d times\n", ph->a->m_eat);
 }
