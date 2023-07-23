@@ -129,13 +129,11 @@ static void	ft_death(t_philo *ph)
 	while (!b)
 	{
 		i = 0;
-		while (i < ph->a->total_ph && !ft_check(&ph[i]))
+		while (i < ph->a->total_ph && !ft_check(ph))
 			++i;
 		if (ph->a->stop_process)
 			b = -1;
 	}
-	printf("Stop process = %d       nb_finished  = %d\n", ph->a->stop_process, ph->a->nb_finished);
-	printf("Start time = %ld       time eat  = %ld\n", ph->a->s_time, ph->time_eat);
 	if (ph->a->stop_process == 2)
 		printf("Each philosophers ate %d times\n", ph->a->m_eat);
 }

@@ -45,7 +45,7 @@ typedef struct s_philo
 	int		id;
 	int		nb_eat;
 	long	time_eat;
-	pid_t	pid_ph;
+	pid_t	pid;
 	t_arg	*a;
 }	t_philo;
 

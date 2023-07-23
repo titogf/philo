@@ -24,13 +24,13 @@ int	ft_create_process(t_d *d)
 	while (++i < d->arg.total_ph)
 	{
 		d->ph[i].a = &d->arg;
-		d->ph[i].pid_ph = fork();
-		if (d->ph[i].pid_ph < 0)
+		d->ph[i].pid = fork();
+		if (d->ph[i].pid < 0)
 		{
 			printf("Process error\n");
 			return (0);
 		}
-		else if (d->ph[i].pid_ph == 0)
+		else if (d->ph[i].pid == 0)
 			ft_process(&d->ph[i]);
 	}
 	return (1);

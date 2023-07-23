@@ -40,7 +40,7 @@ void	ft_kill(t_d *d)
 
 	i = -1;
 	while (++i < d->arg.total_ph)
-		kill(d->ph[i].pid_ph, SIGKILL);
+		kill(d->ph[i].pid, SIGKILL);
 	sem_close(d->arg.sem_forks);
 	sem_close(d->arg.write_stats);
 	sem_close(d->arg.sem_death);
