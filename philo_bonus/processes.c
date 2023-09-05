@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-static void	ft_process(t_philo *ph);
+static void	*ft_process(void *data);
 static void	ft_eat(t_philo *ph);
 static void	ft_think_sleep(t_philo *ph);
 
@@ -24,20 +24,26 @@ int	ft_create_process(t_d *d)
 	while (++i < d->arg.total_ph)
 	{
 		d->ph[i].a = &d->arg;
-		d->ph[i].pid = fork();
-		if (d->ph[i].pid < 0)
+		d->arg.pid[i] = fork();
+		if (d->arg.pid[i] < 0)
 		{
 			printf("Process error\n");
 			return (0);
 		}
-		else if (d->ph[i].pid == 0)
+		else if (d->arg.pid[i] > 0)
+			//pthread_create(&d->ph[i].thread_ph, NULL, ft_process, &d->ph[i]);
 			ft_process(&d->ph[i]);
 	}
 	return (1);
 }
 
-static void	ft_process(t_philo *ph)
+static void	*ft_process(void *data)
 {
+	t_philo *ph;
+
+	ph = (t_philo *) data;
+	if (ph->id % 2 == 0)
+		ft_usleep(ph->a->die / 8);
 	while (!ph->a->stop_process)
 	{
 		ft_eat(ph);
@@ -48,7 +54,7 @@ static void	ft_process(t_philo *ph)
 			sem_post(ph->a->ph_finish);
 		}
 	}
-	return ;
+	return (ph);
 }
 
 static void	ft_eat(t_philo *ph)

@@ -38,6 +38,7 @@ typedef struct s_arg
 	sem_t	*time_to_eat;
 	sem_t	*ph_finish;
 	sem_t	*sem_forks;
+	pid_t	*pid;
 }	t_arg;
 
 typedef struct s_philo
@@ -45,7 +46,7 @@ typedef struct s_philo
 	int		id;
 	int		nb_eat;
 	long	time_eat;
-	pid_t	pid;
+	pthread_t	thread_ph;
 	t_arg	*a;
 }	t_philo;
 

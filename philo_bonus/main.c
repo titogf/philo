@@ -34,13 +34,16 @@ int	main(int ac, char **av)
 	if (!d.ph)
 		ft_put_finish("Malloc error\n");
 	ft_init_struct_philo(&d);
+	d.arg.pid = malloc (sizeof (pid_t) * d.arg.total_ph);
 	if (!ft_create_process(&d))
 	{
+		free(d.arg.pid);
 		free(d.ph);
 		return (0);
 	}
 	ft_death(d.ph);
 	ft_kill(&d);
+	free(d.arg.pid);
 	free(d.ph);
 	return (0);
 }
@@ -129,11 +132,14 @@ static void	ft_death(t_philo *ph)
 	while (!b)
 	{
 		i = 0;
-		while (i < ph->a->total_ph && !ft_check(ph))
+		while (i < ph->a->total_ph && !ft_check(&ph[i]))
 			++i;
 		if (ph->a->stop_process)
 			b = -1;
 	}
+	i = -1;
+	while (++i < ph->a->total_ph)
+		pthread_join(ph[i].thread_ph, NULL);
 	if (ph->a->stop_process == 2)
 		printf("Each philosophers ate %d times\n", ph->a->m_eat);
 }
