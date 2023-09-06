@@ -31,7 +31,6 @@ int	ft_create_process(t_d *d)
 			return (0);
 		}
 		else if (d->arg.pid[i] > 0)
-			//pthread_create(&d->ph[i].thread_ph, NULL, ft_process, &d->ph[i]);
 			ft_process(&d->ph[i]);
 	}
 	return (1);

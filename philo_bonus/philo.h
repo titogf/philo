@@ -21,6 +21,7 @@
 # include <semaphore.h>
 # include <sys/time.h>
 # include <sys/types.h>
+# include <sys/wait.h>
 # include <signal.h>
 
 typedef struct s_arg
@@ -46,7 +47,6 @@ typedef struct s_philo
 	int		id;
 	int		nb_eat;
 	long	time_eat;
-	pthread_t	thread_ph;
 	t_arg	*a;
 }	t_philo;
 

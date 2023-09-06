@@ -139,7 +139,7 @@ static void	ft_death(t_philo *ph)
 	}
 	i = -1;
 	while (++i < ph->a->total_ph)
-		pthread_join(ph[i].thread_ph, NULL);
+		waitpid(ph->a->pid[i], NULL, WNOHANG);
 	if (ph->a->stop_process == 2)
 		printf("Each philosophers ate %d times\n", ph->a->m_eat);
 }
