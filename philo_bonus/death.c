@@ -45,6 +45,7 @@ void	ft_kill(t_d *d)
 	sem_close(d->arg.write_stats);
 	sem_close(d->arg.sem_death);
 	sem_close(d->arg.ph_finish);
+	sem_close(d->arg.time_to_eat);
 }
 
 void	ft_usleep(long int time)
