@@ -33,14 +33,14 @@ long	ft_actual_time(void)
 	return (time);
 }
 
-void	ft_put_finish(char *c)
+int	ft_put_finish(char *c)
 {
 	int	i;
 
 	i = -1;
 	while (c[++i])
 		write(1, &c[i], 1);
-	exit (1);
+	return (-1);
 }
 
 int	ft_atoi(char *str)

@@ -13,26 +13,21 @@
 #include "philo.h"
 
 static int	ft_check_argv(int ac, char **av);
-static void	ft_init_struct_arg(t_d *d, char **av);
+static int	ft_init_struct_arg(t_d *d, char **av);
 static void	ft_init_struct_philo(t_d *d);
 static void	ft_death(t_philo *ph);
-
-/*static void	leaks(void)
-{
-	system("leaks philo");
-}*/
 
 int	main(int ac, char **av)
 {
 	t_d	d;
 
-//	atexit(leaks);
 	if (ft_check_argv(ac, av) == -1)
 		return (-1);
-	ft_init_struct_arg(&d, av);
+	if (ft_init_struct_arg(&d, av) == -1)
+		return (-1);
 	d.ph = malloc(sizeof (t_philo) * d.arg.total_ph);
 	if (!d.ph)
-		ft_put_finish("Malloc error\n");
+		return (ft_put_finish("Malloc error\n"));
 	ft_init_struct_philo(&d);
 	if (!ft_create_thread(&d))
 	{
@@ -62,7 +57,7 @@ static int	ft_check_argv(int ac, char **av)
 		{
 			if (av[i][j] < '0' || av[i][j] > '9')
 			{
-				printf("Invalid arguments, only numbers are expected\n");
+				printf("Invalid arguments, positive numbers are expected\n");
 				return (-1);
 			}
 		}
@@ -70,7 +65,7 @@ static int	ft_check_argv(int ac, char **av)
 	return (0);
 }
 
-static void	ft_init_struct_arg(t_d *d, char **av)
+static int	ft_init_struct_arg(t_d *d, char **av)
 {
 	struct timeval	s_time;
 
@@ -85,11 +80,18 @@ static void	ft_init_struct_arg(t_d *d, char **av)
 	{
 		d->arg.m_eat = ft_atoi(av[5]);
 		if (d->arg.m_eat < 1)
+		{
 			ft_put_finish("Invalid arguments, positive values are expected\n");
+			return (-1);
+		}
 	}
 	if (d->arg.total_ph < 1 || d->arg.die < 1 || d->arg.eat < 1
 		|| d->arg.sleep < 1)
+	{
 		ft_put_finish("Invalid arguments, positive values are expected\n");
+		return (-1);
+	}
+	return (0);
 }
 
 static void	ft_init_struct_philo(t_d *d)

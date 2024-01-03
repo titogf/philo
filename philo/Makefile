@@ -20,7 +20,7 @@ BLUE	= '\033[1;34m'
 WHITE	= '\033[1;37m'
 
 CC = gcc
-FLAGS = -Wall -Werror -Wextra -g3 -fsanitize=address
+FLAGS = -Wall -Werror -Wextra
 
 OBJS = $(SRC:.c=.o)
 
@@ -46,3 +46,5 @@ re: fclean all
 
 n:
 	"norminette"
+
+.PHONY: all clean fclean re n
