@@ -63,7 +63,8 @@ int		ft_atoi(char *str);
 int		create_thread(t_d *d);
 
 long	actual_time(void);
-int		check(t_philo *ph);
+int		check_argv(int ac, char **av);
+int		check_death(t_philo *ph);
 void	ft_usleep(long int time_in_ms);
 
 #endif

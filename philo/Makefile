@@ -12,7 +12,7 @@
 
 NAME = philo
 
-SRC = src/main.c src/pthreads.c src/death.c src/initialize.c src/utils.c
+SRC = src/main.c src/pthreads.c src/check.c src/initialize.c src/utils.c
 
 RED		= '\033[1;31m'
 GREEN	= '\033[1;32m'

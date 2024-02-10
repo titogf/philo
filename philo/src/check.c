@@ -12,7 +12,33 @@
 
 #include "../philo.h"
 
-int	check(t_philo *ph)
+int	check_argv(int ac, char **av)
+{
+	int	i;
+	int	j;
+
+	if (ac != 5 && ac != 6)
+	{
+		printf("Invalid, five or six arguments are expected\n");
+		return (-1);
+	}
+	i = 0;
+	while (av[++i])
+	{
+		j = -1;
+		while (av[i][++j])
+		{
+			if (av[i][j] < '0' || av[i][j] > '9')
+			{
+				printf("Invalid arguments, positive numbers are expected\n");
+				return (-1);
+			}
+		}
+	}
+	return (0);
+}
+
+int	check_death(t_philo *ph)
 {
 	pthread_mutex_lock(&ph->a->mutex_death);
 	if (ph->a->nb_finished == ph->a->total_ph)
